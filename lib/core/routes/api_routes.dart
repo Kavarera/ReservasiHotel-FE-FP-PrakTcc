@@ -3,4 +3,5 @@ abstract class ApiRoutesRepo {
       'https://reservasihotelbe-dot-e-02-415004.as.r.appspot.com/api';
   static const String login = '/signin';
   static const String register = '/signup';
+  static const String bookings = '/bookings';
 }

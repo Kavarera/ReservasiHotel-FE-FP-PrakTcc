@@ -10,7 +10,6 @@ class LoginController extends GetxController {
   final EmployeeService _employeeService = EmployeeService();
   void login(String text, String text2) async {
     isLoading.value = true;
-    print("loading true");
     try {
       final result = await _employeeService
           .login(UserLoginRequest(username: text, password: text2));
@@ -26,7 +25,6 @@ class LoginController extends GetxController {
         Get.snackbar('Error', 'Login Failed');
       }
     } catch (e) {
-      print('masuk catch controler ${e}');
       Get.snackbar('Error', 'An Error occured while login');
     } finally {
       isLoading.value = false;

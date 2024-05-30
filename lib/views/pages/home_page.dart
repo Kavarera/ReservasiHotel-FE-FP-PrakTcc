@@ -1,15 +1,23 @@
+import 'package:fe_sendiri_prak_tcc_fp/controllers/home_controller.dart';
+import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
+import 'package:fe_sendiri_prak_tcc_fp/views/widgets/loading_full_page_widget.dart';
+import 'package:fe_sendiri_prak_tcc_fp/views/widgets/report_stat_widget.dart';
+import 'package:fe_sendiri_prak_tcc_fp/views/widgets/table_booking_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  GlobalKey _menuKey = GlobalKey();
+  final GlobalKey _menuKey = GlobalKey();
+  final HomeController _homeController =
+      Get.put(HomeController(), tag: 'homeController', permanent: true);
 
   void _showPopupMenu() {
     final RenderBox button =
@@ -27,18 +35,32 @@ class _HomePageState extends State<HomePage> {
     showMenu<String>(
             context: context,
             position: position,
+            surfaceTintColor: Colors.white,
+            shadowColor: Colors.black,
+            elevation: 15,
+            popUpAnimationStyle:
+                AnimationStyle(duration: const Duration(milliseconds: 300)),
+            constraints: const BoxConstraints(maxHeight: 300, maxWidth: 350),
             items: [
-              'Item 1',
-              'Item 2',
-              'Item 3',
+              'Pelanggan 1',
+              'Pelanggan 2',
+              'Pelanggan 3',
+              'Pelanggan 4',
+              'Pelanggan 5',
             ].map((String value) {
               return PopupMenuItem<String>(
                 value: value,
                 child: Container(
-                  width: 200, // Atur lebar item menu
-                  height: 150, // Atur tinggi item menu
+                  width: 300, // Atur lebar item menu
+                  height: 80, // Atur tinggi item menu
                   alignment: Alignment.center,
-                  child: Text(value),
+                  child: ListTile(
+                    title: Text(value),
+                    leading: const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               );
             }).toList())
@@ -55,15 +77,16 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-            key: _menuKey,
-            backgroundColor: Colors.greenAccent.shade700,
-            foregroundColor: Colors.white,
-            shape: null,
-            child: const Icon(
-              Icons.messenger_sharp,
-              color: Colors.white,
-            ),
-            onPressed: _showPopupMenu),
+          key: _menuKey,
+          backgroundColor: Colors.greenAccent.shade700,
+          foregroundColor: Colors.white,
+          shape: null,
+          onPressed: _showPopupMenu,
+          child: const Icon(
+            Icons.messenger_sharp,
+            color: Colors.white,
+          ),
+        ),
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -97,7 +120,9 @@ class _HomePageState extends State<HomePage> {
                   'Bookings',
                   style: TextStyle(color: Colors.white),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, AppRouteRepo.home);
+                },
               ),
               ListTile(
                 title: const Text(
@@ -135,22 +160,65 @@ class _HomePageState extends State<HomePage> {
                 ),
                 onTap: () {},
               ),
-              // Row(
-              //   crossAxisAlignment: CrossAxisAlignment.end,
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     const Text('Mode Malam',
-              //         style: TextStyle(color: Colors.white)),
-              //     Switch(value: false, onChanged: (v) {})
-              //   ],
-              // )
             ],
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10),
+        body: Navigator(
+          onGenerateRoute: (settings) {
+            return MaterialPageRoute(
+              builder: (context) => HomeScreen(homeController: _homeController),
+            );
+          },
         ),
       ),
     );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
+    super.key,
+    required HomeController homeController,
+  }) : _homeController = homeController;
+
+  final HomeController _homeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      if (_homeController.isLoading.value == true) {
+        return const Center(
+          child: LoadingFullpage(isLoading: true),
+        );
+      } else {
+        return Column(
+          children: [
+            ReportSummary(
+              titles: const ["Employee", "Customers", "Bookings"],
+              datas: [
+                "You have 20 employees are working with you",
+                "1000+ Customer have an account",
+                "You have ${_homeController.bookings.value} booking right now"
+              ],
+              icons: const [Icons.people, Icons.account_box, Icons.schedule],
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30),
+              width: MediaQuery.of(context).size.width / 2,
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  labelText: 'Search Code',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            TableBooking(controller: _homeController)
+          ],
+        );
+      }
+    });
   }
 }
