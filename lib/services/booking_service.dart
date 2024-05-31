@@ -9,7 +9,7 @@ class BookingService {
   Future<BookingPublicModel?> getPublicBookingData(
       {bool isPrivate = false}) async {
     final url = Uri.parse('${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.bookings}');
-    Future.delayed(const Duration(seconds: 55));
+    // Future.delayed(const Duration(seconds: 55));
 
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String? jwtToken = pref.getString('token');

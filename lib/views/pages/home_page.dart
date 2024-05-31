@@ -191,33 +191,41 @@ class HomeScreen extends StatelessWidget {
           child: LoadingFullpage(isLoading: true),
         );
       } else {
-        return Column(
-          children: [
-            ReportSummary(
-              titles: const ["Employee", "Customers", "Bookings"],
-              datas: [
-                "You have 20 employees are working with you",
-                "1000+ Customer have an account",
-                "You have ${_homeController.bookings.value} booking right now"
-              ],
-              icons: const [Icons.people, Icons.account_box, Icons.schedule],
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              width: MediaQuery.of(context).size.width / 2,
-              child: TextField(
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  labelText: 'Search Code',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+        return MediaQuery.of(context).size.width > 1300
+            ? Column(
+                children: [
+                  ReportSummary(
+                    titles: const ["Employee", "Customers", "Bookings"],
+                    datas: [
+                      "You have 20 employees are working with you",
+                      "1000+ Customer have an account",
+                      "You have ${_homeController.bookings.value} booking right now"
+                    ],
+                    icons: const [
+                      Icons.people,
+                      Icons.account_box,
+                      Icons.schedule
+                    ],
                   ),
-                ),
-              ),
-            ),
-            TableBooking(controller: _homeController)
-          ],
-        );
+                  Container(
+                    margin: const EdgeInsets.only(top: 30),
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        labelText: 'Search Code',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  TableBooking(controller: _homeController)
+                ],
+              )
+            : const Center(
+                child: Text("Not available on mobile"),
+              );
       }
     });
   }

@@ -17,7 +17,7 @@ class HomeController extends GetxController {
     try {
       BookingService bs = BookingService();
       final result = await bs.getPublicBookingData();
-      await Future.delayed(const Duration(seconds: 10));
+      // await Future.delayed(const Duration(seconds: 10));
       bookings.value = result;
       isLoading.value = false;
     } catch (e) {

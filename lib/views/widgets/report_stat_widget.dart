@@ -27,6 +27,7 @@ class StatusHotelItemWidget extends StatelessWidget {
                 fontSize: 30,
                 fontWeight: FontWeight.w600,
               ),
+              overflow: TextOverflow.ellipsis, // add this
             ),
           ),
           const Divider(
@@ -49,8 +50,8 @@ class StatusHotelItemWidget extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
                       ),
-                      maxLines: null,
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.ellipsis, // add this
+                      maxLines: 2, // add this
                     ),
                   ),
                 ),
@@ -72,29 +73,38 @@ class ReportSummary extends StatelessWidget {
   final List<String> titles;
   final List<String> datas;
   final List<IconData?>? icons;
-  const ReportSummary(
-      {super.key, required this.titles, required this.datas, this.icons});
+
+  const ReportSummary({
+    super.key,
+    required this.titles,
+    required this.datas,
+    this.icons,
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (titles.length != datas.length) {
-      throw Exception("Not equals length");
-    }
-    return SingleChildScrollView(
-      child: GridView.count(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: titles.length,
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = screenWidth > 600
+        ? 3
+        : 1; // adjust the number of columns based on screen width
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: titles.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
         childAspectRatio: 3 / 1.5,
-        children: [
-          for (int i = 0; i < titles.length; i++)
-            StatusHotelItemWidget(
-              title: titles.elementAt(i),
-              data: datas.elementAt(i),
-              icon: icons?.elementAt(i),
-            ),
-        ],
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
       ),
+      itemBuilder: (context, index) {
+        return StatusHotelItemWidget(
+          title: titles.elementAt(index),
+          data: datas.elementAt(index),
+          icon: icons?.elementAt(index),
+        );
+      },
     );
   }
 }

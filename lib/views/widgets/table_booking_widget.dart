@@ -10,7 +10,8 @@ class TableBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Flexible(
+      fit: FlexFit.tight,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SizedBox(
