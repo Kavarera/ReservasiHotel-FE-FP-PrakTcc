@@ -19,6 +19,7 @@ class EmployeeService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       pref.setString('token', data['token']);
+      await Future.delayed(const Duration(seconds: 5));
       return Employee.fromJson(data['data']);
     } else {
       throw Exception('Failed to login');

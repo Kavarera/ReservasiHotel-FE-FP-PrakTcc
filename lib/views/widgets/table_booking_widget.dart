@@ -1,5 +1,6 @@
 import 'package:fe_sendiri_prak_tcc_fp/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TableBooking extends StatelessWidget {
   final HomeController controller;
@@ -44,15 +45,20 @@ class TableBooking extends StatelessWidget {
                   )
                   // row 1
                 ],
-                rows: controller.bookings.value!.data.map((data) {
+                rows: controller.bookings.value!.dataprivate.map((data) {
                   return DataRow(
                     cells: [
-                      DataCell(Text(data.checkin)), // display checkin date
-                      DataCell(Text(data.checkin)), // display checkin date
-                      DataCell(Text(data.checkin)), // display checkin date
-                      DataCell(Text(data.checkin)), // display checkin date
+                      DataCell(Text(data!.kodeBooking)), // display checkin date
+                      DataCell(Text(
+                          formatDate(data.checkin))), // display checkin date
                       DataCell(
-                          Text(data.days.toString())), // display number of days
+                          Text(data.days.toString())), // display checkin date
+                      DataCell(
+                          Text(data.roomId.toString())), // display checkin date
+                      DataCell(ElevatedButton(
+                          onPressed: () {},
+                          child:
+                              const Text("Detail"))), // display number of days
                       // add more cells for other columns if needed
                     ],
                   );
@@ -63,5 +69,11 @@ class TableBooking extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatDate(String input) {
+    final dateTime = DateTime.parse(input);
+    final format = DateFormat('MM-dd-yyyy HH:mm');
+    return format.format(dateTime);
   }
 }

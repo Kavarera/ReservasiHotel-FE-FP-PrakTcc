@@ -16,9 +16,9 @@ class LoginController extends GetxController {
       isLoading.value = false;
       if (result != null) {
         employee.value = result;
-        Get.snackbar('Success', 'Login Successfully',
-            snackPosition: SnackPosition.TOP,
-            duration: const Duration(seconds: 2));
+        // Get.snackbar('Success', 'Login Successfully',
+        //     snackPosition: SnackPosition.TOP,
+        //     duration: const Duration(seconds: 2));
         // print('masuk result !=null');
         Get.offNamed(AppRouteRepo.home);
       } else {

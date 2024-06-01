@@ -1,11 +1,13 @@
 import 'package:fe_sendiri_prak_tcc_fp/controllers/home_controller.dart';
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
+import 'package:fe_sendiri_prak_tcc_fp/controllers/navigation_controller.dart';
+import 'package:fe_sendiri_prak_tcc_fp/views/widgets/custom_app_bar.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/loading_full_page_widget.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/report_stat_widget.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/table_booking_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:fe_sendiri_prak_tcc_fp/views/widgets/navigation_drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +20,8 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _menuKey = GlobalKey();
   final HomeController _homeController =
       Get.put(HomeController(), tag: 'homeController', permanent: true);
+
+  final NavigationController _navigationController = Get.find();
 
   void _showPopupMenu() {
     final RenderBox button =
@@ -87,82 +91,8 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
           ),
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Tinggal-in",
-            style: GoogleFonts.firaSans(
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        ),
-        drawer: Drawer(
-          backgroundColor: Colors.black,
-          child: ListView(
-            padding: const EdgeInsets.all(5),
-            children: [
-              DrawerHeader(
-                  child: Center(
-                child: Text(
-                  'Tinggal-in',
-                  style: GoogleFonts.firaSans(
-                    fontSize: 40,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              )),
-              ListTile(
-                title: const Text(
-                  'Bookings',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, AppRouteRepo.home);
-                },
-              ),
-              ListTile(
-                title: const Text(
-                  'Room Types',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: const Text(
-                  'Employees',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: const Text(
-                  'About Dev',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Mode Malam',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Switch(value: false, onChanged: (v) {})
-                  ],
-                ),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
+        appBar: const CustomAppbar(),
+        drawer: CustomNavigationDrawer(),
         body: Navigator(
           onGenerateRoute: (settings) {
             return MaterialPageRoute(
@@ -199,7 +129,7 @@ class HomeScreen extends StatelessWidget {
                     datas: [
                       "You have 20 employees are working with you",
                       "1000+ Customer have an account",
-                      "You have ${_homeController.bookings.value} booking right now"
+                      "You have ${_homeController.bookings.value?.length.toString()} bookings done"
                     ],
                     icons: const [
                       Icons.people,
