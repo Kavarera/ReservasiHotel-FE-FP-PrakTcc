@@ -57,6 +57,16 @@ class RoomTypeController extends GetxController {
     _getRoomTypes();
   }
 
+  Future<void> deleteRoomType(RoomTypeData rt) async {
+    try {
+      await rts.deleteRoomType(rt.id);
+      Get.snackbar('Success', 'Removing done');
+      _getRoomTypes();
+    } catch (e) {
+      Get.snackbar('Failed', e.toString());
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();

@@ -67,8 +67,8 @@ class RoomTypeService {
     if (token == null) {
       throw Exception('No token');
     }
-    final url =
-        Uri.parse('${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertRoomType}');
+    final url = Uri.parse(
+        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertDeleteRoomType}');
 
     final http.Response response = await http.post(url,
         headers: <String, String>{
@@ -82,6 +82,30 @@ class RoomTypeService {
     } else {
       throw Exception(
           'Failed to add a Room Type, statusCode = ${response.statusCode}');
+    }
+  }
+
+  Future<void> deleteRoomType(int rt) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString('token');
+    if (token == null) {
+      throw Exception('No token');
+    }
+    final url = Uri.parse(
+        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertDeleteRoomType}');
+    final http.Response response = await http.delete(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({"id": rt}),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception(
+          'Failed to delete ${response.statusCode} - ${jsonDecode(response.body)}');
     }
   }
 }

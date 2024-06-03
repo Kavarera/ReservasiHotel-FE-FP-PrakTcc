@@ -5,6 +5,7 @@ import 'package:fe_sendiri_prak_tcc_fp/views/widgets/navigation_drawer_widget.da
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/room_type_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
@@ -55,9 +56,29 @@ class _RoomTypesPageState extends State<RoomTypesPage> {
                 ),
                 itemCount: controller.roomTypes.value!.data.length,
                 itemBuilder: (context, index) {
-                  return RoomTypeCard(
-                      roomType:
-                          controller.roomTypes.value!.data.elementAt(index));
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: RoomTypeCard(
+                            roomType: controller.roomTypes.value!.data
+                                .elementAt(index)),
+                      ),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white)),
+                          onPressed: () async {
+                            await controller.deleteRoomType(controller
+                                .roomTypes.value!.data
+                                .elementAt(index));
+                          },
+                          child: const Text('Delete'))
+                    ],
+                  );
                 });
           }
         }),
