@@ -1,11 +1,16 @@
+import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
 import 'package:fe_sendiri_prak_tcc_fp/models/room/room_model.dart';
+import 'package:fe_sendiri_prak_tcc_fp/models/roomtype/room_type_model.dart';
 import 'package:fe_sendiri_prak_tcc_fp/services/room_service.dart';
+import 'package:fe_sendiri_prak_tcc_fp/services/room_type_service.dart';
 import 'package:get/get.dart';
 
 class RoomController extends GetxController {
   var isLoading = false.obs;
   var rooms = Rxn<RoomModel>();
-  void getRoomData() async {
+  var roomType = Rxn<RoomType>();
+  Future<void> getRoomData() async {
+    await _fetchRoomId();
     isLoading.value = true;
     try {
       RoomService rs = RoomService();
@@ -18,10 +23,37 @@ class RoomController extends GetxController {
     }
   }
 
+  Future<void> _fetchRoomId() async {
+    isLoading.value = true;
+    try {
+      RoomTypeService rts = RoomTypeService();
+      final result = await rts.getRoomType();
+      roomType.value = result;
+    } catch (e) {
+      Get.snackbar('Error', '$e');
+    }
+  }
+
+  Future<void> postRoomType(RoomModel rm) async {
+    try {
+      RoomService roomService = RoomService();
+      if (await roomService.insertRoom(rm) == true) {
+        Get.snackbar('Success', 'Success add new room');
+        Get.off(AppRouteRepo.roomPageAdmin);
+      } else {
+        Get.snackbar('Failed', 'Failed add new room');
+      }
+    } catch (e) {
+      Get.snackbar('Error', '$e');
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
     getRoomData();
     isLoading.value = true;
   }
+
+  updateRoom() {}
 }

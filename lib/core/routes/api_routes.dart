@@ -9,4 +9,5 @@ abstract class ApiRoutesRepo {
   static const String insertRoomType = '/roomtype';
   static const String uploadImage = '/upload';
   static const String roomAvailable = '/roomsavailable';
+  static const String insertRoom = '/room';
 }
