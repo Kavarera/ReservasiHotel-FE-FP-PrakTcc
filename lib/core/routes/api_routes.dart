@@ -9,5 +9,5 @@ abstract class ApiRoutesRepo {
   static const String insertUpdateDeleteRoomType = '/roomtype';
   static const String uploadImage = '/upload';
   static const String roomAvailable = '/roomsavailable';
-  static const String insertRoom = '/room';
+  static const String insertDeleteRoom = '/room';
 }

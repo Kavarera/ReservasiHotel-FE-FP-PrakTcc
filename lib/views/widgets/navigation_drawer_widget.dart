@@ -3,6 +3,7 @@ import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomNavigationDrawer extends StatelessWidget {
   final NavigationController navigationController = Get.find();
@@ -59,25 +60,15 @@ class CustomNavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text(
-              'Employees',
+              'Keluar',
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {},
-          ),
-          ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Mode Malam',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                Switch(value: false, onChanged: (v) {})
-              ],
-            ),
-            onTap: () {},
+            onTap: () async {
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+              await prefs.remove('token');
+              Get.offAllNamed(AppRouteRepo.login);
+            },
           ),
           ListTile(
             title: const Text(

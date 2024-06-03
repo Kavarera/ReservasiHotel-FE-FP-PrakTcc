@@ -28,7 +28,7 @@ class RoomService {
 
   Future<bool> insertRoom(RoomModelData room) async {
     final url =
-        Uri.parse('${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertRoom}');
+        Uri.parse('${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertDeleteRoom}');
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String? jwtToken = pref.getString('token');
     if (jwtToken == null) {
@@ -48,8 +48,33 @@ class RoomService {
       RoomModel.fromJson(data);
       return true;
     } else {
-      print('${jsonDecode(response.body)['message']}');
       throw Exception('Failed to add new room: ${response.statusCode}');
+    }
+  }
+
+  Future<bool> deleteRoom(int id) async {
+    final url =
+        Uri.parse('${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertDeleteRoom}');
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String? jwtToken = pref.getString('token');
+    if (jwtToken == null) {
+      throw Exception('No token found');
+    }
+    final http.Response response = await http.delete(url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $jwtToken',
+        },
+        body: jsonEncode({"id": id}));
+    print(response.body);
+    if (response.statusCode == 200) {
+      print('berhasil');
+      final Map<String, dynamic> data = json.decode(response.body);
+      print('berhasil');
+      return true;
+    } else {
+      print('ini ngapa ya?? ${response.statusCode}');
+      throw Exception('Failed to delete room: ${response.statusCode}');
     }
   }
 }

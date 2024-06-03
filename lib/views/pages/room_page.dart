@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fe_sendiri_prak_tcc_fp/controllers/navigation_controller.dart';
 import 'package:fe_sendiri_prak_tcc_fp/controllers/room_page_controller.dart';
 import 'package:fe_sendiri_prak_tcc_fp/controllers/room_type_controller.dart';
@@ -7,7 +8,9 @@ import 'package:fe_sendiri_prak_tcc_fp/views/widgets/custom_app_bar.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/loading_full_page_widget.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/navigation_drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RoomPage extends StatefulWidget {
   const RoomPage({super.key});
@@ -21,40 +24,146 @@ class _RoomPageState extends State<RoomPage> {
   final GlobalKey _menuKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return controller.isLoading.value == true
-          ? LoadingFullpage(isLoading: controller.isLoading.value)
-          : SafeArea(
-              child: Scaffold(
-                appBar: const CustomAppbar(),
-                drawer: CustomNavigationDrawer(),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () async {
-                    await _showAddRoomDialog(context);
-                    controller.updateRoom();
-                    // Navigator.of(context).pop();
-                  },
-                  backgroundColor: Colors.black,
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                ),
-                body: controller.rooms.value != null
+    return SafeArea(
+      child: Scaffold(
+          appBar: const CustomAppbar(),
+          drawer: CustomNavigationDrawer(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              await _showAddRoomDialog(context);
+              controller.updateRoom();
+              // Navigator.of(context).pop();
+            },
+            backgroundColor: Colors.black,
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
+          body: Obx(() {
+            return controller.isLoading.value == true
+                ? Center(
+                    child:
+                        LoadingFullpage(isLoading: controller.isLoading.value))
+                : controller.rooms.value != null
                     ? ListView.builder(
                         itemCount: controller.rooms.value!.length,
                         itemBuilder: ((context, index) {
-                          return ListTile(
-                            title: Text(
-                                '${controller.rooms.value!.data.elementAt(index).name} - ${controller.rooms.value!.data.elementAt(index).roomTypeId}'),
-                          );
+                          return MediaQuery.of(context).size.width <= 800
+                              ? Center(child: Text('Screen Too Small'))
+                              : Card(
+                                  surfaceTintColor: Colors.white,
+                                  shadowColor: Colors.black,
+                                  elevation: 40,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20),
+                                      topRight: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Container(
+                                    height: 300,
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Container(
+                                          height: 300,
+                                          child: CachedNetworkImage(
+                                            imageUrl: controller
+                                                .getRoomTypeById(index)
+                                                .imageUrl,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 50,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                controller.rooms.value!.data
+                                                    .elementAt(index)
+                                                    .name,
+                                                style: GoogleFonts.firaSans(
+                                                  fontSize: 48,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                              ),
+                                              Text(
+                                                controller
+                                                    .getRoomTypeById(index)
+                                                    .name,
+                                                style: GoogleFonts.firaSans(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Floor : ${controller.rooms.value!.data.elementAt(index).floor}",
+                                                style: GoogleFonts.firaSans(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontStyle: FontStyle.normal,
+                                                ),
+                                              ),
+                                              Text(
+                                                "Price IDR : ${controller.getRoomTypeById(index).price}",
+                                                style: GoogleFonts.firaSans(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontStyle: FontStyle.normal,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            print(
+                                                'clicked ${controller.rooms.value!.data.elementAt(index).id}');
+                                            _deleteRoom(controller
+                                                .rooms.value!.data
+                                                .elementAt(index));
+                                          },
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.black),
+                                            foregroundColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.white),
+                                          ),
+                                          child: Text(
+                                            'Hapus',
+                                            style: GoogleFonts.firaSans(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
                         }))
                     : const Center(
                         child: Text('No Data'),
-                      ),
-              ),
-            );
-    });
+                      );
+          })),
+    );
   }
 
   Future<void> _showAddRoomDialog(BuildContext context) async {
@@ -133,7 +242,7 @@ class _RoomPageState extends State<RoomPage> {
             ),
             TextButton(
               onPressed: () async {
-                await controller.postRoomType(RoomModelData(
+                await controller.postRoom(RoomModelData(
                     id: 0,
                     name: nameController.text,
                     roomNumber: roomNumberController.text,
@@ -148,5 +257,9 @@ class _RoomPageState extends State<RoomPage> {
         );
       },
     );
+  }
+
+  void _deleteRoom(RoomModelData rm) async {
+    await controller.deleteRoom(rm);
   }
 }

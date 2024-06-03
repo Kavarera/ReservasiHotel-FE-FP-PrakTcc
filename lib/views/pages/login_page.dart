@@ -23,6 +23,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _cekLogin();
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -132,5 +133,9 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _cekLogin() async {
+    await LoginController.checkToken();
   }
 }

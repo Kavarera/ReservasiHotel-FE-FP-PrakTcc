@@ -34,7 +34,7 @@ class RoomController extends GetxController {
     }
   }
 
-  Future<void> postRoomType(RoomModelData rm) async {
+  Future<void> postRoom(RoomModelData rm) async {
     try {
       RoomService roomService = RoomService();
       print('awal post');
@@ -42,6 +42,21 @@ class RoomController extends GetxController {
       if (result == true) {
         print('selesai post');
         Get.snackbar('Success', 'Success add new room');
+      } else {
+        Get.snackbar('Failed', 'Failed add new room');
+      }
+    } catch (e) {
+      print('$e');
+    }
+  }
+
+  Future<void> deleteRoom(RoomModelData rm) async {
+    try {
+      RoomService roomService = RoomService();
+      bool result = await roomService.deleteRoom(rm.id);
+      if (result == true) {
+        Get.snackbar('Success', 'Success delete room');
+        await getRoomData();
       } else {
         Get.snackbar('Failed', 'Failed add new room');
       }
@@ -62,5 +77,18 @@ class RoomController extends GetxController {
     await Future.delayed(const Duration(seconds: 5));
     await getRoomData();
     isLoading.value = false;
+  }
+
+  RoomTypeData getRoomTypeById(int index) {
+    int rtId = rooms.value!.data.elementAt(index).roomTypeId;
+
+    RoomTypeData? rtData = roomType.value!.data
+        .map((e) => e)
+        .firstWhere((element) => element.id == rtId, orElse: null);
+    if (rtData != null) {
+      return rtData;
+    } else {
+      throw Exception('Failed to get detail data');
+    }
   }
 }

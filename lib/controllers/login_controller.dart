@@ -2,6 +2,7 @@ import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
 import 'package:fe_sendiri_prak_tcc_fp/models/employee/login.dart';
 import 'package:fe_sendiri_prak_tcc_fp/services/employee_service.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   var isLoading = false.obs;
@@ -28,6 +29,17 @@ class LoginController extends GetxController {
       Get.snackbar('Error', 'An Error occured while login');
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  static Future<void> checkToken() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String? jwtToken = pref.getString('token');
+    if (jwtToken == null) {
+      return;
+    } else {
+      Get.snackbar('Welcome back', 'Have a nice day!');
+      Get.offNamed(AppRouteRepo.home);
     }
   }
 }
