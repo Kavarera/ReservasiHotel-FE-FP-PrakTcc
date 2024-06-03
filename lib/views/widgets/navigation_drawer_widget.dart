@@ -50,14 +50,16 @@ class CustomNavigationDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text(
-              'Employees',
+              'Rooms',
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {},
+            onTap: () {
+              navigationController.changePage(2);
+            },
           ),
           ListTile(
             title: const Text(
-              'Rooms',
+              'Employees',
               style: TextStyle(color: Colors.white),
             ),
             onTap: () {},

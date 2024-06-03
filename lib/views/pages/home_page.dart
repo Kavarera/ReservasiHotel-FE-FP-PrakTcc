@@ -116,9 +116,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      const LoadingFullpage lp = LoadingFullpage(isLoading: true);
       if (_homeController.isLoading.value == true) {
         return const Center(
-          child: LoadingFullpage(isLoading: true),
+          child: lp,
         );
       } else {
         return MediaQuery.of(context).size.width > 1300

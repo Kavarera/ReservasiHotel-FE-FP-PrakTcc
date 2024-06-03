@@ -8,19 +8,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RoomService {
   Future<RoomModel?> getRoomModel() async {
     final url = Uri.parse(ApiRoutesRepo.baseUrl + ApiRoutesRepo.roomAvailable);
-
-    final http.Response response = await http.get(url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
-        });
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString('token');
+    if (token == null) {
+      throw Exception('No token');
+    }
+    final http.Response response =
+        await http.get(url, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $token',
+    });
     if (response.statusCode == 200) {
+      print(json.decode(response.body));
       return RoomModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to fetch room model');
+      throw Exception('Failed to fetch room model ${response.statusCode}');
     }
   }
 
-  Future<bool> insertRoom(RoomModel room) async {
+  Future<bool> insertRoom(RoomModelData room) async {
     final url =
         Uri.parse('${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertRoom}');
     final SharedPreferences pref = await SharedPreferences.getInstance();
@@ -29,17 +35,20 @@ class RoomService {
       throw Exception('No token found');
     }
 
+    print(room.toJson());
+
     final http.Response response = await http.post(url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $jwtToken',
         },
         body: jsonEncode(room.toJson()));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final Map<String, dynamic> data = json.decode(response.body);
       RoomModel.fromJson(data);
       return true;
     } else {
+      print('${jsonDecode(response.body)['message']}');
       throw Exception('Failed to add new room: ${response.statusCode}');
     }
   }

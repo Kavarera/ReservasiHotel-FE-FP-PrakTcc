@@ -6,15 +6,22 @@ import 'package:get/get.dart';
 
 class RoomTypeController extends GetxController {
   var roomTypes = Rxn<RoomType>();
+  var selectedRoomTypes = Rxn<RoomTypeData>();
   var isLoading = false.obs;
   var imageUrl = ''.obs;
   RoomTypeService rts = RoomTypeService();
+
+  void setSelectedRoomTypes(RoomTypeData rt) {
+    selectedRoomTypes.value = rt;
+  }
+
   void _getRoomTypes() async {
     try {
       isLoading.value = true;
       final result = await rts.getRoomType();
       roomTypes.value = result;
       isLoading.value = false;
+      selectedRoomTypes.value = result.data.first;
     } catch (e) {
       Get.snackbar('Error', '$e');
     }

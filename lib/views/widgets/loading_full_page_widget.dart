@@ -13,25 +13,31 @@ class LoadingFullpage extends StatefulWidget {
 
 class _LoadingFullpageState extends State<LoadingFullpage>
     with TickerProviderStateMixin {
-  late AnimationController _controller;
+  late AnimationController controller;
   late Animation<int> _animation;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    controller = AnimationController(
       duration: const Duration(seconds: 10),
       vsync: this,
     )..repeat();
-    _animation = IntTween(begin: 0, end: 30).animate(_controller);
+    _animation = IntTween(begin: 0, end: 30).animate(controller);
   }
 
   @override
   void didUpdateWidget(LoadingFullpage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!widget.isLoading) {
-      _controller.stop();
+      controller.stop();
     }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override

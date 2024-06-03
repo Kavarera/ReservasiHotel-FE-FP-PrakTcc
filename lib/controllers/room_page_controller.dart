@@ -34,17 +34,19 @@ class RoomController extends GetxController {
     }
   }
 
-  Future<void> postRoomType(RoomModel rm) async {
+  Future<void> postRoomType(RoomModelData rm) async {
     try {
       RoomService roomService = RoomService();
-      if (await roomService.insertRoom(rm) == true) {
+      print('awal post');
+      bool result = await roomService.insertRoom(rm);
+      if (result == true) {
+        print('selesai post');
         Get.snackbar('Success', 'Success add new room');
-        Get.off(AppRouteRepo.roomPageAdmin);
       } else {
         Get.snackbar('Failed', 'Failed add new room');
       }
     } catch (e) {
-      Get.snackbar('Error', '$e');
+      print('$e');
     }
   }
 
@@ -55,5 +57,10 @@ class RoomController extends GetxController {
     isLoading.value = true;
   }
 
-  updateRoom() {}
+  void updateRoom() async {
+    isLoading.value = true;
+    await Future.delayed(const Duration(seconds: 5));
+    await getRoomData();
+    isLoading.value = false;
+  }
 }

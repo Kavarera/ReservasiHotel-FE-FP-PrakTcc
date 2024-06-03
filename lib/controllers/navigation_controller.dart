@@ -13,6 +13,9 @@ class NavigationController extends GetxController {
       case 1:
         Get.offNamed(AppRouteRepo.roomTypes);
         break;
+      case 2:
+        Get.offNamed(AppRouteRepo.roomPageAdmin);
+        break;
       // Tambahkan navigasi lain sesuai kebutuhan
     }
   }

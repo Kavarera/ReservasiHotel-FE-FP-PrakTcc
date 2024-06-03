@@ -1,20 +1,20 @@
 class RoomModel {
   int length;
-  List<Data> data;
+  List<RoomModelData> data;
 
   RoomModel({required this.length, required this.data});
 
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     int length = json['length'];
-    List<Data> data =
-        (json['data'] as List).map((e) => Data.fromJson(e)).toList();
+    List<RoomModelData> data =
+        (json['data'] as List).map((e) => RoomModelData.fromJson(e)).toList();
     return RoomModel(length: length, data: data);
   }
 
   Map<String, dynamic> toJson() => {"length": length, "data": data};
 }
 
-class Data {
+class RoomModelData {
   final int id;
   final String name;
   final String roomNumber;
@@ -22,7 +22,7 @@ class Data {
   final bool available;
   final int roomTypeId;
 
-  Data(
+  RoomModelData(
       {required this.id,
       required this.name,
       required this.roomNumber,
@@ -30,8 +30,8 @@ class Data {
       required this.available,
       required this.roomTypeId});
 
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
+  factory RoomModelData.fromJson(Map<String, dynamic> json) {
+    return RoomModelData(
         id: json['id'],
         name: json['name'],
         roomNumber: json['roomNumber'],
@@ -41,11 +41,10 @@ class Data {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'name': name,
         'roomNumber': roomNumber,
         'floor': floor,
         'available': available,
-        'roomTypeId': roomTypeId
+        'RoomTypeId': roomTypeId
       };
 }
