@@ -68,7 +68,7 @@ class RoomTypeService {
       throw Exception('No token');
     }
     final url = Uri.parse(
-        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertDeleteRoomType}');
+        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertUpdateDeleteRoomType}');
 
     final http.Response response = await http.post(url,
         headers: <String, String>{
@@ -92,7 +92,7 @@ class RoomTypeService {
       throw Exception('No token');
     }
     final url = Uri.parse(
-        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertDeleteRoomType}');
+        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertUpdateDeleteRoomType}');
     final http.Response response = await http.delete(
       url,
       headers: <String, String>{
@@ -106,6 +106,33 @@ class RoomTypeService {
     } else {
       throw Exception(
           'Failed to delete ${response.statusCode} - ${jsonDecode(response.body)}');
+    }
+  }
+
+  Future<void> updatePriceRoomType(RoomTypeData rtd) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString('token');
+    if (token == null) {
+      throw Exception('No token');
+    }
+    final url = Uri.parse(
+        '${ApiRoutesRepo.baseUrl}${ApiRoutesRepo.insertUpdateDeleteRoomType}');
+    final http.Response response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'id': rtd.id,
+        'price': double.parse(rtd.price),
+        'imageUrl': rtd.imageUrl
+      }),
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to update ${response.statusCode}');
     }
   }
 }

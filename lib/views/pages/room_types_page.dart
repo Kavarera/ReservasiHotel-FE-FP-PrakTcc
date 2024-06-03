@@ -61,9 +61,61 @@ class _RoomTypesPageState extends State<RoomTypesPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(
-                        child: RoomTypeCard(
-                            roomType: controller.roomTypes.value!.data
-                                .elementAt(index)),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  TextEditingController pe =
+                                      TextEditingController();
+                                  return AlertDialog(
+                                    surfaceTintColor: Colors.white,
+                                    elevation: 30,
+                                    title: const Text('Edit Room Type Price'),
+                                    content: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 5,
+                                      child: TextFormField(
+                                        controller: pe,
+                                        decoration: const InputDecoration(
+                                            labelText: 'Room Type Price'),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Please enter a price';
+                                          }
+                                          if (double.tryParse(value) == null ||
+                                              double.parse(value) < 0) {
+                                            return 'Please enter a valid number';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Close'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await controller.updatePriceRoomType(
+                                              controller.roomTypes.value!.data
+                                                  .elementAt(index),
+                                              pe.text);
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Submit'),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: RoomTypeCard(
+                              roomType: controller.roomTypes.value!.data
+                                  .elementAt(index)),
+                        ),
                       ),
                       ElevatedButton(
                           style: ButtonStyle(

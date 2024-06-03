@@ -15,60 +15,53 @@ class RoomTypeCard extends StatelessWidget {
       surfaceTintColor: Colors.white,
       elevation: 40,
       shadowColor: Colors.black,
-      child: InkWell(
-        onTap: _showDetail,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Column(
-              children: [
-                Container(
-                  height: constraints.maxHeight /
-                      2, // set the height to half of the card's height
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: [
+              Container(
+                height: constraints.maxHeight /
+                    2, // set the height to half of the card's height
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                  ),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(
+                      roomType.imageUrl,
                     ),
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        roomType.imageUrl,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 10),
-                Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  child: Center(
-                    child: Text(
-                      roomType.name,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                ),
+                child: Center(
+                  child: Text(
+                    roomType.name,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
-                Text(
-                  roomType.price,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              Text(
+                roomType.price,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
-  }
-
-  _showDetail() {
-    print(roomType.name);
   }
 }

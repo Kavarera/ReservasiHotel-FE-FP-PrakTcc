@@ -30,6 +30,7 @@ class RoomTypeController extends GetxController {
   Future<void> _postNewRoomType(RoomTypeInserRequest rtir) async {
     try {
       await rts.insertRoomType(rtir);
+      _getRoomTypes();
     } catch (e) {
       Get.snackbar('Error', '$e');
     }
@@ -71,5 +72,16 @@ class RoomTypeController extends GetxController {
   void onInit() {
     super.onInit();
     _getRoomTypes();
+  }
+
+  Future<void> updatePriceRoomType(RoomTypeData elementAt, String text) async {
+    elementAt.price = text;
+    try {
+      await rts.updatePriceRoomType(elementAt);
+      Get.snackbar('Success', 'Update Succesfully');
+      _getRoomTypes();
+    } catch (e) {
+      Get.snackbar('Failed', e.toString());
+    }
   }
 }
