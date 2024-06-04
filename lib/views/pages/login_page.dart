@@ -89,15 +89,17 @@ class LoginPage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: _login,
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.black),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  side:
-                                      const BorderSide(color: Colors.black)))),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: const BorderSide(color: Colors.black),
+                          ),
+                        ),
+                      ),
                       child: Obx(() {
                         return _loginController.isLoading.value
                             ? const CircularProgressIndicator(

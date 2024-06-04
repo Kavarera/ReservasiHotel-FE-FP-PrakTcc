@@ -70,13 +70,6 @@ class CustomNavigationDrawer extends StatelessWidget {
               Get.offAllNamed(AppRouteRepo.login);
             },
           ),
-          ListTile(
-            title: const Text(
-              'About Dev',
-              style: TextStyle(color: Colors.white),
-            ),
-            onTap: () {},
-          ),
         ],
       ),
     );

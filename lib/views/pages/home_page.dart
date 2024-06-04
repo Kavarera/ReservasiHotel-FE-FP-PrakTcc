@@ -6,7 +6,6 @@ import 'package:fe_sendiri_prak_tcc_fp/views/widgets/report_stat_widget.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/table_booking_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:fe_sendiri_prak_tcc_fp/views/widgets/navigation_drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,8 +19,6 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _menuKey = GlobalKey();
   final HomeController _homeController =
       Get.put(HomeController(), tag: 'homeController', permanent: true);
-
-  final NavigationController _navigationController = Get.find();
 
   void _showPopupMenu() {
     final RenderBox button =
@@ -112,7 +109,6 @@ class HomeScreen extends StatelessWidget {
   }) : _homeController = homeController;
 
   final HomeController _homeController;
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -149,9 +145,16 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
+                      onSubmitted: (v) {
+                        print('$v => enter?');
+                        _homeController.searchBookingByCode(v);
+                      },
                     ),
                   ),
-                  TableBooking(controller: _homeController)
+                  Obx(() => TableBooking(
+                        controller: _homeController.bookings.value!,
+                        homeController: _homeController,
+                      ))
                 ],
               )
             : const Center(
