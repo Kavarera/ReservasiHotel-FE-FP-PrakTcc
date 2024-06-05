@@ -1,8 +1,8 @@
-import 'package:fe_sendiri_prak_tcc_fp/views/pages/home_page.dart';
-import 'package:fe_sendiri_prak_tcc_fp/views/pages/login_page.dart';
-import 'package:fe_sendiri_prak_tcc_fp/views/pages/register_page.dart';
-import 'package:fe_sendiri_prak_tcc_fp/views/pages/room_page.dart';
-import 'package:fe_sendiri_prak_tcc_fp/views/pages/room_types_page.dart';
+import 'package:reservasi_hotel_admin/views/pages/home_page.dart';
+import 'package:reservasi_hotel_admin/views/pages/login_page.dart';
+import 'package:reservasi_hotel_admin/views/pages/register_page.dart';
+import 'package:reservasi_hotel_admin/views/pages/room_page.dart';
+import 'package:reservasi_hotel_admin/views/pages/room_types_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

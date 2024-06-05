@@ -1,6 +1,6 @@
-import 'package:fe_sendiri_prak_tcc_fp/controllers/navigation_controller.dart';
-import 'package:fe_sendiri_prak_tcc_fp/controllers/room_type_controller.dart';
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
+import 'package:reservasi_hotel_admin/controllers/navigation_controller.dart';
+import 'package:reservasi_hotel_admin/controllers/room_type_controller.dart';
+import 'package:reservasi_hotel_admin/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

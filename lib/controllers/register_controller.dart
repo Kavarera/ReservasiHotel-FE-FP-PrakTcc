@@ -1,6 +1,6 @@
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
-import 'package:fe_sendiri_prak_tcc_fp/models/employee/signup.dart';
-import 'package:fe_sendiri_prak_tcc_fp/services/employee_service.dart';
+import 'package:reservasi_hotel_admin/core/routes/app_routes.dart';
+import 'package:reservasi_hotel_admin/models/employee/signup.dart';
+import 'package:reservasi_hotel_admin/services/employee_service.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {

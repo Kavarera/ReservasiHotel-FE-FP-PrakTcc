@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:fe_sendiri_prak_tcc_fp/models/roomtype/room_type_model.dart';
-import 'package:fe_sendiri_prak_tcc_fp/services/room_type_service.dart';
+import 'package:reservasi_hotel_admin/models/roomtype/room_type_model.dart';
+import 'package:reservasi_hotel_admin/services/room_type_service.dart';
 import 'package:get/get.dart';
 
 class RoomTypeController extends GetxController {

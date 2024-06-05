@@ -1,4 +1,4 @@
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
+import 'package:reservasi_hotel_admin/core/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class NavigationController extends GetxController {

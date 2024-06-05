@@ -1,5 +1,5 @@
-import 'package:fe_sendiri_prak_tcc_fp/controllers/login_controller.dart';
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
+import 'package:reservasi_hotel_admin/controllers/login_controller.dart';
+import 'package:reservasi_hotel_admin/core/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -66,6 +66,7 @@ class LoginPage extends StatelessWidget {
                 height: 20,
               ),
               TextField(
+                obscureText: true,
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: "Password",

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/api_routes.dart';
-import 'package:fe_sendiri_prak_tcc_fp/models/booking/booking_model.dart';
+import 'package:reservasi_hotel_admin/core/routes/api_routes.dart';
+import 'package:reservasi_hotel_admin/models/booking/booking_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

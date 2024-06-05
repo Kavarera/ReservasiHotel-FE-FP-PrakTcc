@@ -1,5 +1,5 @@
 runtime: python39
-service: web-frontend-reservasihotel-admin-dua
+service: test-web-frontend-reservasihotel-admin-dua
 
 handlers:
 - url: /

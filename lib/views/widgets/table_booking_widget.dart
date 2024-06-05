@@ -1,5 +1,5 @@
-import 'package:fe_sendiri_prak_tcc_fp/controllers/home_controller.dart';
-import 'package:fe_sendiri_prak_tcc_fp/models/booking/booking_model.dart';
+import 'package:reservasi_hotel_admin/controllers/home_controller.dart';
+import 'package:reservasi_hotel_admin/models/booking/booking_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

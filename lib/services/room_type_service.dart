@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/api_routes.dart';
-import 'package:fe_sendiri_prak_tcc_fp/models/roomtype/room_type_model.dart';
+import 'package:reservasi_hotel_admin/core/routes/api_routes.dart';
+import 'package:reservasi_hotel_admin/models/roomtype/room_type_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';

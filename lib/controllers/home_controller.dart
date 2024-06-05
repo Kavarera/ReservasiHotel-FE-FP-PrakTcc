@@ -1,7 +1,7 @@
 import 'dart:js';
 
-import 'package:fe_sendiri_prak_tcc_fp/models/booking/booking_model.dart';
-import 'package:fe_sendiri_prak_tcc_fp/services/booking_service.dart';
+import 'package:reservasi_hotel_admin/models/booking/booking_model.dart';
+import 'package:reservasi_hotel_admin/services/booking_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

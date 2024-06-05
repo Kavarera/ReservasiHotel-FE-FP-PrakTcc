@@ -1,8 +1,8 @@
-import 'package:fe_sendiri_prak_tcc_fp/core/routes/app_routes.dart';
-import 'package:fe_sendiri_prak_tcc_fp/models/room/room_model.dart';
-import 'package:fe_sendiri_prak_tcc_fp/models/roomtype/room_type_model.dart';
-import 'package:fe_sendiri_prak_tcc_fp/services/room_service.dart';
-import 'package:fe_sendiri_prak_tcc_fp/services/room_type_service.dart';
+import 'package:reservasi_hotel_admin/core/routes/app_routes.dart';
+import 'package:reservasi_hotel_admin/models/room/room_model.dart';
+import 'package:reservasi_hotel_admin/models/roomtype/room_type_model.dart';
+import 'package:reservasi_hotel_admin/services/room_service.dart';
+import 'package:reservasi_hotel_admin/services/room_type_service.dart';
 import 'package:get/get.dart';
 
 class RoomController extends GetxController {
